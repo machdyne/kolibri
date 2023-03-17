@@ -24,7 +24,7 @@ Configure the FPGA SRAM:
 $ ldprog -Ks blinky.bin
 ```
 
-Program the flash MMOD:
+Program the flash:
 
 ```
 $ ldprog -Kf blinky.bin
