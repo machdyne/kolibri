@@ -2,6 +2,8 @@
 
 Kolibri is a USB FPGA dongle designed by Lone Dynamics Corporation.
 
+![Kolibri FPGA Dongle](https://github.com/machdyne/kolibri/blob/a79fe49601e184ec470370f372922697ff4b6bc8/kolibri.png)
+
 This repo contains schematics, example firmware, gateware and documentation.
 
 Find more information on the [Kolibri product page](https://machdyne.com/product/kolibri-fpga-dongle/).
