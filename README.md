@@ -32,7 +32,7 @@ $ ldprog -Kf blinky.bin
 
 ## Firmware
 
-Kolibri ships with RP2040 [firmware](firmware) based on the [Müsli](https://github.com/machdyne/musli) firmware which allows it to communicate with [ldprog](https://github.com/machdyne/ldprog).
+Kolibri ships with RP2040 [firmware](firmware) based on the [Müsli](https://github.com/machdyne/musli) firmware which allows it to communicate with [ldprog](https://github.com/machdyne/ldprog). The firmware also provides a USB CDC bridge to a UART on the FPGA (default: 115200 8N1).
 
 The firmware is responsible for initializing the system, [configuring and outputting the system clock](https://raspberrypi.github.io/pico-sdk-doxygen/group__hardware__clocks.html#details), and either configuring the FPGA or telling the FPGA to configure itself from flash.
 
@@ -41,6 +41,21 @@ The system clock (CLK\_RP) is 48MHz by default.
 The firmware can be updated by holding down the BOOT button, connecting the device to your computer, and then dragging and dropping a new UF2 file to the device filesystem.
 
 The firmware can be built from source or you can use the latest `kolibri.uf2` binary from the firmware directory.
+
+### Default RP2040 to FPGA IO mapping
+
+| Signal | RP2040 | FPGA |
+| ------ | ------ | ---- |
+| RP\_GPIO0 | UART0 TX | UART RX |
+| RP\_GPIO1 | UART0 RX | UART TX |
+| RP\_GPIO2 | UART0 CTS | UART RTS |
+| RP\_GPIO3 | UART0 RTS | UART CTS |
+| RP\_GPIO4 | SPI0 RX | SPI TX |
+| RP\_GPIO5 | SPI0 CS | SPI CS |
+| RP\_GPIO6 | SPI0 SCK | SPI SCK |
+| RP\_GPIO7 | SPI0 TX | SPI RX |
+
+Note: SPI isn't currently used.
 
 ## SOC
 
