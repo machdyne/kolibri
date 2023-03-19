@@ -38,6 +38,8 @@
 
 #define KOLIBRI_TX 0
 #define KOLIBRI_RX 1
+#define KOLIBRI_CTS 2
+#define KOLIBRI_RTS 3
 
 #define SPI_MODE_HW 1
 #define SPI_MODE_PIO 2
