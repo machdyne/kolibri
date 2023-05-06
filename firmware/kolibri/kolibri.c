@@ -43,6 +43,7 @@ void init_gpio(void);
 void init_pio_spi(void);
 void init_kolibri(void);
 void init_kolibri_postconf(void);
+void init_debug_uart(void);
 void ice40_reset(void);
 void pio_spi_cfg(uint8_t pin_sck, uint8_t pin_mosi, uint8_t pin_miso);
 
@@ -267,10 +268,10 @@ void init_gpio(void) {
 	cdc_printf("init_gpio\r\n");
 	spi_deinit(spi1);
 	//uart_deinit(uart0);
-	for (int i = 0; i <= 3; i++) {
-		gpio_init(i);
-		gpio_disable_pulls(i);
-	}
+	//for (int i = 0; i <= 3; i++) {
+	//	gpio_init(i);
+	//	gpio_disable_pulls(i);
+	//}
 	for (int i = 8; i <= 11; i++) {
 		gpio_init(i);
 		gpio_disable_pulls(i);
@@ -313,6 +314,17 @@ void on_uart_rx() {
 	}
 }
 
+void init_debug_uart() {
+	uart_init(uart0, 115200);
+	gpio_set_function(KOLIBRI_TX, GPIO_FUNC_UART);
+	gpio_set_function(KOLIBRI_RX, GPIO_FUNC_UART);
+	gpio_set_function(KOLIBRI_CTS, GPIO_FUNC_UART);
+	gpio_set_function(KOLIBRI_RTS, GPIO_FUNC_UART);
+
+	uart_set_hw_flow(uart0, true, true);
+	uart_set_format(uart0, 8, 1, UART_PARITY_NONE);
+}
+
 int main(void) {
 
 	// set the sys clock to 120mhz
@@ -322,14 +334,7 @@ int main(void) {
 	tud_init(BOARD_TUD_RHPORT);
 
 	// init debug UART
-	uart_init(uart0, 115200);
-	gpio_set_function(KOLIBRI_TX, GPIO_FUNC_UART);
-	gpio_set_function(KOLIBRI_RX, GPIO_FUNC_UART);
-	gpio_set_function(KOLIBRI_CTS, GPIO_FUNC_UART);
-	gpio_set_function(KOLIBRI_RTS, GPIO_FUNC_UART);
-
-	uart_set_hw_flow(uart0, true, true);
-	uart_set_format(uart0, 8, 1, UART_PARITY_NONE);
+	init_debug_uart();
 
 	irq_set_exclusive_handler(UART0_IRQ, on_uart_rx);
 	irq_set_enabled(UART0_IRQ, true);
